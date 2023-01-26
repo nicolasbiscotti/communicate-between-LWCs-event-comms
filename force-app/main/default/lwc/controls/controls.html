@@ -1,0 +1,44 @@
+<template>
+  <lightning-card>
+    <lightning-layout>
+      <lightning-layout-item flexibility="auto" padding="around-small">
+        <lightning-button
+          class="subtract"
+          label="Subtract"
+          icon-name="utility:dash"
+          onclick={handleSubtract}
+        ></lightning-button>
+      </lightning-layout-item>
+
+      <lightning-layout-item>
+        <lightning-button
+          class="multiply by2"
+          label="2"
+          data-factor="2"
+          icon-name="utility:close"
+          onclick={handleMultiply}
+        >
+        </lightning-button>
+        <lightning-button
+          class="multiply by3"
+          label="3"
+          data-factor="3"
+          icon-name="utility:close"
+          onclick={handleMultiply}
+        >
+        </lightning-button>
+      </lightning-layout-item>
+
+      <lightning-layout-item>
+        <lightning-button
+          class="add"
+          label="Add"
+          icon-name="utility:add"
+          onclick={handleAdd}
+          icon-position="right"
+        >
+        </lightning-button>
+      </lightning-layout-item>
+    </lightning-layout>
+  </lightning-card>
+</template>
