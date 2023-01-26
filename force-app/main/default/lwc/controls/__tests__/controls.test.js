@@ -9,6 +9,15 @@ describe("c-controls", () => {
     }
   });
 
+  function dispatchClickOnLWCButton(label, container) {
+    const lwcButtons =
+      container.shadowRoot.querySelectorAll("lightning-button");
+    Array.from(lwcButtons).forEach((button) => {
+      if (button.label === label)
+        button.dispatchEvent(new CustomEvent("click"));
+    });
+  }
+
   it("should dispatch subtract custom event when subtract button is clicked", () => {
     // Arrange
     const controls = createElement("c-controls", {
@@ -19,9 +28,7 @@ describe("c-controls", () => {
 
     // Act
     document.body.appendChild(controls);
-
-    const subtractButton = controls.shadowRoot.querySelector(".subtract");
-    subtractButton.dispatchEvent(new CustomEvent("click"));
+    dispatchClickOnLWCButton("Subtract", controls);
 
     // Assert
     expect(counter).toBe(0);
@@ -37,12 +44,9 @@ describe("c-controls", () => {
 
     // Act
     document.body.appendChild(controls);
-
-    const addButton = controls.shadowRoot.querySelector(".add");
-    addButton.dispatchEvent(new CustomEvent("click"));
+    dispatchClickOnLWCButton("Add", controls);
 
     // Assert
-
     expect(counter).toBe(1);
   });
 
@@ -59,9 +63,7 @@ describe("c-controls", () => {
 
     // Act
     document.body.appendChild(controls);
-
-    const multiplayBy3Button = controls.shadowRoot.querySelector(".by3");
-    multiplayBy3Button.dispatchEvent(new CustomEvent("click"));
+    dispatchClickOnLWCButton("3", controls);
 
     // Assert
     expect(multiplyBy).toBe(3);
@@ -80,9 +82,7 @@ describe("c-controls", () => {
 
     // Act
     document.body.appendChild(controls);
-
-    const multiplayBy2Button = controls.shadowRoot.querySelector(".by2");
-    multiplayBy2Button.dispatchEvent(new CustomEvent("click"));
+    dispatchClickOnLWCButton("2", controls);
 
     // Assert
     expect(multiplyBy).toBe(2);
