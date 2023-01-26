@@ -1,6 +1,8 @@
 import { LightningElement } from "lwc";
 
 export default class Controls extends LightningElement {
+  factors = ["0", "1", "2", "3", "4"];
+
   handleAdd() {
     this.dispatchEvent(new CustomEvent("add"));
   }

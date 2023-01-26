@@ -9,15 +9,6 @@ describe("c-controls", () => {
     }
   });
 
-  function dispatchClickOnLWCButton(label, container) {
-    const lwcButtons =
-      container.shadowRoot.querySelectorAll("lightning-button");
-    Array.from(lwcButtons).forEach((button) => {
-      if (button.label === label)
-        button.dispatchEvent(new CustomEvent("click"));
-    });
-  }
-
   it("should dispatch subtract custom event when subtract button is clicked", () => {
     // Arrange
     const controls = createElement("c-controls", {
@@ -28,7 +19,10 @@ describe("c-controls", () => {
 
     // Act
     document.body.appendChild(controls);
-    dispatchClickOnLWCButton("Subtract", controls);
+    const subtractBtn = controls.shadowRoot.querySelector(
+      "[data-function='subtract']"
+    );
+    subtractBtn.dispatchEvent(new CustomEvent("click"));
 
     // Assert
     expect(counter).toBe(0);
@@ -44,7 +38,8 @@ describe("c-controls", () => {
 
     // Act
     document.body.appendChild(controls);
-    dispatchClickOnLWCButton("Add", controls);
+    const addBtn = controls.shadowRoot.querySelector("[data-function='add']");
+    addBtn.dispatchEvent(new CustomEvent("click"));
 
     // Assert
     expect(counter).toBe(1);
@@ -52,21 +47,25 @@ describe("c-controls", () => {
 
   it("should dispatch multiply event with 3 as data when multiply by 3 button is clicked", () => {
     // Arrange
-    const controls = createElement("c-controls", {
+    const controlsTemplate = createElement("c-controls", {
       is: Controls
     });
     let multiplyBy = 0;
-    controls.addEventListener(
+    controlsTemplate.addEventListener(
       "multiply",
       (event) => (multiplyBy = event.detail)
     );
 
     // Act
-    document.body.appendChild(controls);
-    dispatchClickOnLWCButton("3", controls);
+    document.body.appendChild(controlsTemplate);
+    const multyplayByFour =
+      controlsTemplate.shadowRoot.querySelector("[data-factor='4']");
+    const byFourBtn =
+      multyplayByFour.shadowRoot.querySelector("[data-factor='4']");
+    byFourBtn.dispatchEvent(new CustomEvent("click"));
 
     // Assert
-    expect(multiplyBy).toBe(3);
+    expect(multiplyBy).toBe(4);
   });
 
   it("should dispatch multiply event with 2 as data when multiply by 2 button is clicked", () => {
@@ -82,7 +81,11 @@ describe("c-controls", () => {
 
     // Act
     document.body.appendChild(controls);
-    dispatchClickOnLWCButton("2", controls);
+    const multyplayByTwo =
+      controls.shadowRoot.querySelector("[data-factor='2']");
+    const byTwoBtn =
+      multyplayByTwo.shadowRoot.querySelector("[data-factor='2']");
+    byTwoBtn.dispatchEvent(new CustomEvent("click"));
 
     // Assert
     expect(multiplyBy).toBe(2);
