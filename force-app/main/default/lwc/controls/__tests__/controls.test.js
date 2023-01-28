@@ -90,4 +90,65 @@ describe("c-controls", () => {
     // Assert
     expect(multiplyBy).toBe(2);
   });
+
+  it("should dispatch divide event when the divide by button is clicked", () => {
+    const controls = createElement("c-controls", {
+      is: Controls
+    });
+    let divideBy = 0;
+    controls.addEventListener("divide", (event) => {
+      divideBy = event.detail;
+    });
+
+    document.body.appendChild(controls);
+    const divideButton = controls.shadowRoot.querySelector(
+      "[data-function='divideBy2']"
+    );
+    const button = divideButton.shadowRoot.querySelector("[data-factor='2']");
+    button.dispatchEvent(new CustomEvent("click"));
+
+    expect(divideBy).toBe(2);
+  });
+
+  it("should dispatch divide event with three as factor", () => {
+    const controls = createElement("c-controls", {
+      is: Controls
+    });
+    controls.divisors = 3;
+
+    let divideBy = 0;
+    controls.addEventListener("divide", (event) => {
+      divideBy = event.detail;
+    });
+
+    document.body.appendChild(controls);
+    const divideButton = controls.shadowRoot.querySelector(
+      "[data-function='divideBy3']"
+    );
+    const button = divideButton.shadowRoot.querySelector("[data-factor='3']");
+    button.dispatchEvent(new CustomEvent("click"));
+
+    expect(divideBy).toBe(3);
+  });
+
+  it("should dispatch divide event with three or five as factor", () => {
+    const controls = createElement("c-controls", {
+      is: Controls
+    });
+    controls.divisors = [3, 5];
+
+    let divideBy = 0;
+    controls.addEventListener("divide", (event) => {
+      divideBy = event.detail;
+    });
+
+    document.body.appendChild(controls);
+    const divideButton = controls.shadowRoot.querySelector(
+      "[data-function='divideBy5']"
+    );
+    const button = divideButton.shadowRoot.querySelector("[data-factor='5']");
+    button.dispatchEvent(new CustomEvent("click"));
+
+    expect(divideBy).toBe(5);
+  });
 });

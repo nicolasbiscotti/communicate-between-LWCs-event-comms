@@ -26,6 +26,22 @@
         </template>
       </lightning-layout-item>
 
+      <lightning-layout-item
+        flexibility="auto"
+        padding="around-small"
+        onbuttonclick={handleDivide}
+      >
+        <template for:each={divisors} for:item="divisor">
+          <c-button
+            key={divisor.factor}
+            label={divisor.factor}
+            data-function={divisor.fun}
+            data-factor={divisor.factor}
+            icon="utility:divide"
+          ></c-button>
+        </template>
+      </lightning-layout-item>
+
       <lightning-layout-item flexibility="auto" padding="around-small">
         <lightning-button
           label="Add"
