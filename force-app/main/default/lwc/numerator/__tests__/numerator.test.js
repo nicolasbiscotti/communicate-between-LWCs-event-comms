@@ -73,4 +73,32 @@ describe("c-numerator", () => {
       expect(formattedNumber.value).toBe(2);
     });
   });
+
+  it("should divide by 2 the counter", () => {
+    const numerator = createElement("c-numerator", {
+      is: Numerator
+    });
+
+    document.body.appendChild(numerator);
+
+    const controls = numerator.shadowRoot.querySelector("c-controls");
+    controls.dispatchEvent(new CustomEvent("add"));
+    controls.dispatchEvent(
+      new CustomEvent("multiply", {
+        detail: 4
+      })
+    );
+    controls.dispatchEvent(
+      new CustomEvent("divide", {
+        detail: 2
+      })
+    );
+
+    return Promise.resolve().then(() => {
+      const counter = numerator.shadowRoot.querySelector(
+        "lightning-formatted-number"
+      );
+      expect(counter.value).toBe(2);
+    });
+  });
 });

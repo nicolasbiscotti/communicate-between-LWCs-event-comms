@@ -9,8 +9,8 @@ export default class Controls extends LightningElement {
   }
 
   set divisors(divisors) {
-    if (typeof divisors === "number") {
-      divisors = [divisors];
+    if (typeof divisors !== "object") {
+      divisors = [Number(divisors)];
     }
     this.divisorsFactors = divisors.map((divisor) => {
       return { factor: divisor, fun: `divideBy${divisor}` };
