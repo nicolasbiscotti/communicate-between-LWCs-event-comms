@@ -16,9 +16,7 @@ describe("c-numerator", () => {
 
     document.body.appendChild(numerator);
 
-    const number = numerator.shadowRoot.querySelector(
-      "lightning-formatted-number"
-    );
+    const number = numerator.shadowRoot.querySelector(".counter");
     numerator.counter = 3;
 
     return Promise.resolve().then(() => {
@@ -34,14 +32,12 @@ describe("c-numerator", () => {
 
     // Act
     document.body.appendChild(element);
-    const p = element.shadowRoot.querySelector("p");
-    const formattedNumber = p.querySelector("lightning-formatted-number");
+    const formattedNumber = element.shadowRoot.querySelector(".counter");
     const controls = element.shadowRoot.querySelector("c-controls");
     controls.dispatchEvent(new CustomEvent("add"));
 
     // Assert
     return Promise.resolve().then(() => {
-      expect(p.textContent).toBe("Count:");
       expect(formattedNumber.value).toBe(1);
     });
   });
@@ -54,14 +50,12 @@ describe("c-numerator", () => {
 
     // Act
     document.body.appendChild(element);
-    const p = element.shadowRoot.querySelector("p");
-    const formattedNumber = p.querySelector("lightning-formatted-number");
+    const formattedNumber = element.shadowRoot.querySelector(".counter");
     const controls = element.shadowRoot.querySelector("c-controls");
     controls.dispatchEvent(new CustomEvent("subtract"));
 
     // Assert
     return Promise.resolve().then(() => {
-      expect(p.textContent).toBe("Count:");
       expect(formattedNumber.value).toBe(-1);
     });
   });
@@ -74,8 +68,7 @@ describe("c-numerator", () => {
 
     // Act
     document.body.appendChild(element);
-    const p = element.shadowRoot.querySelector("p");
-    const formattedNumber = p.querySelector("lightning-formatted-number");
+    const formattedNumber = element.shadowRoot.querySelector(".counter");
     const controls = element.shadowRoot.querySelector("c-controls");
     controls.dispatchEvent(new CustomEvent("add"));
     controls.dispatchEvent(
@@ -86,7 +79,6 @@ describe("c-numerator", () => {
 
     // Assert
     return Promise.resolve().then(() => {
-      expect(p.textContent).toBe("Count:");
       expect(formattedNumber.value).toBe(2);
     });
   });
@@ -112,10 +104,37 @@ describe("c-numerator", () => {
     );
 
     return Promise.resolve().then(() => {
-      const counter = numerator.shadowRoot.querySelector(
-        "lightning-formatted-number"
-      );
+      const counter = numerator.shadowRoot.querySelector(".counter");
       expect(counter.value).toBe(2);
+    });
+  });
+
+  it("should bump the count by one millon", () => {
+    const numerator = createElement("c-numerator", {
+      is: Numerator
+    });
+
+    document.body.appendChild(numerator);
+    numerator.maximizeCounter(1000000);
+
+    return Promise.resolve().then(() => {
+      expect(numerator.counter).toBe(1000000);
+    });
+  });
+
+  it("should hold the prior count after change the counter", () => {
+    const numerator = createElement("c-numerator", {
+      is: Numerator
+    });
+
+    document.body.appendChild(numerator);
+    numerator.counter = 24;
+    const controls = numerator.shadowRoot.querySelector("c-controls");
+    controls.dispatchEvent(new CustomEvent("add"));
+
+    return Promise.resolve().then(() => {
+      const priorCount = numerator.shadowRoot.querySelector(".prior-count");
+      expect(priorCount.value).toBe(24);
     });
   });
 });

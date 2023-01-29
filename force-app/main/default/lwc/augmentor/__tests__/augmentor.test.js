@@ -39,4 +39,20 @@ describe("c-augmentor", () => {
       expect(numerator.counter).toBe(100);
     });
   });
+
+  it("should bump the count by one millon", () => {
+    const augmentor = createElement("c-augmentor", {
+      is: Augmentor
+    });
+
+    document.body.appendChild(augmentor);
+    const bumpCountButton =
+      augmentor.shadowRoot.querySelector("lightning-button");
+    bumpCountButton.dispatchEvent(new CustomEvent("click"));
+
+    return Promise.resolve().then(() => {
+      const numerator = augmentor.shadowRoot.querySelector("c-numerator");
+      expect(numerator.counter).toBe(1000000);
+    });
+  });
 });

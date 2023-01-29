@@ -1,8 +1,18 @@
 <template>
   <lightning-card>
-    <p>
+    <p class="slds-text-align_center slds-var-m-vertical_medium">
+      Prior Count:
+      <lightning-formatted-number
+        class="prior-count"
+        value={priorCount}
+      ></lightning-formatted-number>
+    </p>
+    <p class="slds-text-align_center slds-var-m-vertical_medium">
       Count:
-      <lightning-formatted-number value={counter}></lightning-formatted-number>
+      <lightning-formatted-number
+        class="counter"
+        value={counter}
+      ></lightning-formatted-number>
     </p>
     <c-controls
       class="slds-show slds-is-relative"
