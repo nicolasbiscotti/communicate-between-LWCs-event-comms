@@ -9,6 +9,23 @@ describe("c-numerator", () => {
     }
   });
 
+  it("should set the formatted number to 3", () => {
+    const numerator = createElement("c-numerator", {
+      is: Numerator
+    });
+
+    document.body.appendChild(numerator);
+
+    const number = numerator.shadowRoot.querySelector(
+      "lightning-formatted-number"
+    );
+    numerator.counter = 3;
+
+    return Promise.resolve().then(() => {
+      expect(number.value).toBe(3);
+    });
+  });
+
   it("should add one to the counter", () => {
     // Arrange
     const element = createElement("c-numerator", {

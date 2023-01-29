@@ -1,8 +1,21 @@
-import { LightningElement } from "lwc";
+import { api, LightningElement } from "lwc";
 
 export default class Numerator extends LightningElement {
-  counter = 0;
+  _currentValue = 0;
   divideBy = [2, 3, 4, 5, 6];
+
+  setCurrentValue(value) {
+    this._currentValue = value;
+  }
+
+  @api
+  get counter() {
+    return this._currentValue;
+  }
+  set counter(value) {
+    this.setCurrentValue(value);
+  }
+
   handleIncrement() {
     this.counter++;
   }
@@ -11,10 +24,10 @@ export default class Numerator extends LightningElement {
   }
   handleMultiply(event) {
     const factor = event.detail;
-    this.counter *= factor;
+    this.setCurrentValue(this._currentValue * factor);
   }
   handleDivide(event) {
     const divisor = event.detail;
-    this.counter /= divisor;
+    this.setCurrentValue(this._currentValue / divisor);
   }
 }
